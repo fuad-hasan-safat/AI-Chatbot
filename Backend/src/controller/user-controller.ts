@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import User from "../models/User.js";
 import { hash, compare } from "bcrypt";
 import { createToken } from "../utils/token-manager.js";
+import { COOKIE_NAME } from "../utils/constants.js";
 
 export const getAllUsers = async (
   req: Request,
@@ -28,10 +29,32 @@ export const usersSignup = async (
     const existingUser = await User.findOne({email:email});
     if(existingUser) return res.status(401).send("<h1>user already exist</h1>"); 
     const hashedPassword = await hash(password, 10);
-    const users = new User({ name, email, password: hashedPassword });
+    const user = new User({ name, email, password: hashedPassword });
 
-    await users.save();
-    return res.json({ messege: "User Created", id: users._id.toString() });
+    await user.save();
+
+    // create token and store cookie
+       res.clearCookie(COOKIE_NAME, {
+      httpOnly:true,
+      domain:"localhost",
+      signed: true,
+      path:"/",
+    });
+    
+    const token = createToken(user._id.toString(), user.email,"7d");
+    const expires = new Date();
+    expires.setDate(expires.getDate()+7);
+    res.cookie(COOKIE_NAME, token,{
+      path:"/", 
+      domain:"localhost", 
+      expires, 
+      httpOnly:true, 
+      signed:true,
+      });
+
+
+
+    return res.json({ messege: "User Created", id: user._id.toString() });
   } catch (error) {
     return res.status(404).json({ messege: "Errors", cause: error.message });
   }
@@ -49,8 +72,25 @@ export const usersLogin = async (
     if(!user) return res.status(401).send("User dose not exist!");
     const isPasswordCorrect = await compare(password, user.password);
     if(!isPasswordCorrect) return res.status(403).send("Incorrect password");
-
+    
+    res.clearCookie(COOKIE_NAME, {
+      httpOnly:true,
+      domain:"localhost",
+      signed: true,
+      path:"/",
+    });
+    
     const token = createToken(user._id.toString(), user.email,"7d");
+    const expires = new Date();
+    expires.setDate(expires.getDate()+7);
+    res.cookie(COOKIE_NAME, token,{
+      path:"/", 
+      domain:"localhost", 
+      expires, 
+      httpOnly:true, 
+      signed:true,
+      });
+
     return res.status(200).json({ messege: "Log in sucessfully", id: user._id.toString() });
   } catch (error) {
     return res.status(404).json({ messege: "Errors", cause: error.message });
