@@ -7,10 +7,10 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Chat from './pages/Chat';
 import NotFound from './pages/NotFound';
+import { useAuth } from './context/AuthContext';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  // console.log(useAuth()?.isLoggedIn())
   return (
      <main>
       <Header />
