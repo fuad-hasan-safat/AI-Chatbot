@@ -1,8 +1,16 @@
 import { Box, Button, Typography } from '@mui/material'
 import { IoLogIn } from "react-icons/io5";
+import React from 'react';
 import CustomizedInput from '../components/shared/CustomizedInput'
 
-function Login() {
+function Login() { 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email');
+    const password = formData.get('password');
+    console.log(email , password)
+  }
   return (
     <Box width={'100%'} height={'100%'} display={'flex'} flex={1}>
       <Box
@@ -30,6 +38,7 @@ function Login() {
       >
 
         <form
+        onSubmit={(handleSubmit)}
         style={{
           margin:"auto",
           padding:"30px",
@@ -56,6 +65,7 @@ function Login() {
             <CustomizedInput type='email' name='email' label='Email' />
             <CustomizedInput type='password' name='password' label='Password' />
             <Button
+            type='submit'
             sx={{
               px: 2,
               py: 1,
