@@ -54,7 +54,7 @@ export const usersSignup = async (
 
 
 
-    return res.json({ messege: "User Created", id: user._id.toString() });
+    return res.status(200).json({ messege: "User Created", name: user.name, email: user.email });
   } catch (error) {
     return res.status(404).json({ messege: "Errors", cause: error.message });
   }
@@ -91,7 +91,7 @@ export const usersLogin = async (
       signed:true,
       });
 
-    return res.status(200).json({ messege: "Log in sucessfully", id: user._id.toString() });
+    return res.status(200).json({ messege: "Log in sucessfully",  name: user.name, email: user.email  });
   } catch (error) {
     return res.status(404).json({ messege: "Errors", cause: error.message });
   }
