@@ -108,7 +108,6 @@ export const verifyUser = async (
     const user = await User.findById(res.locals.jwtData.id);
     if(!user) return res.status(401).send("User dose not register or Token malfunctioned!");
 
-    console.log(user._id.toString(), res.locals.jwtData.id);
     if(user._id.toString() !== res.locals.jwtData.id){
       return res.status(401).send("Permission denied");
     }
