@@ -3,6 +3,7 @@ import User from "../models/User.js";
 import { hash, compare } from "bcrypt";
 import { createToken } from "../utils/token-manager.js";
 import { COOKIE_NAME } from "../utils/constants.js";
+import jwt from 'jsonwebtoken';
 
 export const getAllUsers = async (
   req: Request,
@@ -90,6 +91,27 @@ export const usersLogin = async (
       httpOnly:true, 
       signed:true,
       });
+
+    return res.status(200).json({ messege: "Log in sucessfully",  name: user.name, email: user.email  });
+  } catch (error) {
+    return res.status(404).json({ messege: "Errors", cause: error.message });
+  }
+};
+
+export const verifyUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  // user verify
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+    if(!user) return res.status(401).send("User dose not register or Token malfunctioned!");
+
+    console.log(user._id.toString(), res.locals.jwtData.id);
+    if(user._id.toString() !== res.locals.jwtData.id){
+      return res.status(401).send("Permission denied");
+    }
 
     return res.status(200).json({ messege: "Log in sucessfully",  name: user.name, email: user.email  });
   } catch (error) {
