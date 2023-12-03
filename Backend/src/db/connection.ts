@@ -9,7 +9,7 @@ export default async function connectionToDatabase(){
     }
 }
 
-async function disconnectFromDatabase() {
+export async function disconnectFromDatabase() {
     try{
         await disconnect();
     }catch(error){

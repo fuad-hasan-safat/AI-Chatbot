@@ -1,12 +1,24 @@
 import { Router } from "express";
-import { getAllUsers, usersLogin, usersSignup, verifyUser } from "../controller/user-controller.js";
-import { loginValidator, signupValidator, validate } from "../utils/validators.js";
+import {
+  getAllUsers,
+  userLogin,
+  userLogout,
+  userSignup,
+  verifyUser,
+} from "../controllers/user-controllers.js";
+import {
+  loginValidator,
+  signupValidator,
+  validate,
+} from "../utils/validators.js";
 import { verifyToken } from "../utils/token-manager.js";
 
-const useRoutes = Router();
-useRoutes.get('/', getAllUsers);
-useRoutes.post('/signup', validate(signupValidator), usersSignup);
-useRoutes.post('/login', validate(loginValidator), usersLogin);
-useRoutes.get('/auth-status',verifyToken, verifyUser);
+const userRoutes = Router();
 
-export default useRoutes;
+userRoutes.get("/", getAllUsers);
+userRoutes.post("/signup", validate(signupValidator), userSignup);
+userRoutes.post("/login", validate(loginValidator), userLogin);
+userRoutes.get("/auth-status", verifyToken, verifyUser);
+userRoutes.get("/logout", verifyToken, userLogout);
+
+export default userRoutes;
