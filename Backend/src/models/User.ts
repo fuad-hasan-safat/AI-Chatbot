@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   chats: [chatSchema],
-});
+},
+{ timestamps: true });
 
 export default mongoose.model("User", userSchema);
