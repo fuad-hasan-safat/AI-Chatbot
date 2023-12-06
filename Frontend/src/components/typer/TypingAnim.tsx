@@ -9,13 +9,14 @@ const TypingAnim = () => {
         1000,
         "Built With OpenAI 🤖",
         2000,
-        "Your Own Customized ChatGPT 💻",
+        "Increase your productivity with ChatGPT 💻",
         1500,
+        
       ]}
       speed={50}
       style={{
         fontSize: "60px",
-        color: "white",
+        color: "yellow",
         display: "inline-block",
         textShadow: "1px 1px 20px #000",
       }}

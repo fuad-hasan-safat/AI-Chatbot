@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
@@ -7,7 +6,6 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Chat from './pages/Chat';
 import NotFound from './pages/NotFound';
-import { useAuth } from './context/AuthContext';
 
 function App() {
   // console.log(useAuth()?.isLoggedIn())

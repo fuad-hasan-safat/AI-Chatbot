@@ -12,15 +12,15 @@ const Footer = () => {
           marginTop: 60,
         }}
       >
-        <p style={{ fontSize: "30px", textAlign: "center", padding: "20px" }}>
-          Built With love by
+        <p style={{ color:"yellow", fontSize: "30px", textAlign: "center", padding: "20px" }}>
+          "I imagine a world in which AI is going to make us work more productively, live longer, and have cleaner energy."
           <span>
             <Link
               style={{ color: "white" }}
               className="nav-link"
               to={"https://www.youtube.com/@fuad-hasan-safat"}
             >
-              A passionate Coder
+              — Fei-Fei Li.
             </Link>
           </span>
           💘
