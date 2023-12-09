@@ -1,55 +1,54 @@
-import React from 'react'
-import {AppBar , Toolbar} from '@mui/material'
-import Logo from './shared/Logo'
-import { useAuth } from '../context/AuthContext'
-import NavigationLink from './shared/NavigationLink';
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Logo from "./shared/Logo";
+import { useAuth } from "../context/AuthContext";
+import NavigationLink from "./shared/NavigationLink";
 
-
-function Header() {
+const Header = () => {
   const auth = useAuth();
   return (
     <AppBar
-    sx={{bgcolor:"192655", position:"static", boxShadow:"none"}}
+      sx={{ bgcolor: "transparent", position: "static", boxShadow: "none" }}
     >
-        <Toolbar
-        sx={{display:"flex"}}
-        >
-          <Logo/>
-          <div>
-            {auth?.isLoggedIn ? 
-            <> 
-                <NavigationLink 
-                to="/chat"
-                bg="#52c0f1"
-                text="Go To Chat"
-                textColor="black" />            
-                <NavigationLink 
-                to={'/'} 
-                bg={'#548796'} 
-                text={'logout'} 
-                textColor={'white'}
-                onClick={auth.logout}
-                 />
-            </>
-            :
+      <Toolbar sx={{ display: "flex" }}>
+        <Logo />
+        <div>
+          {auth?.isLoggedIn ? (
             <>
-                   
-                <NavigationLink 
-                to="/login"
-                bg="#52c0f1"
-                text="Log In"
-                textColor="black" />                
-                <NavigationLink 
-                to={'/signup'} 
-                bg={'#548796'} 
-                text={'Sign Up'} 
-                textColor={'white'} />
+              <NavigationLink
+                bg="#00fffc"
+                to="/chat"
+                text="Go To Chat"
+                textColor="black"
+              />
+              <NavigationLink
+                bg="#51538f"
+                textColor="white"
+                to="/"
+                text="logout"
+                onClick={auth.logout}
+              />
             </>
-            }
-          </div>
-        </Toolbar>
+          ) : (
+            <>
+              <NavigationLink
+                bg="#00fffc"
+                to="/login"
+                text="Login"
+                textColor="black"
+              />
+              <NavigationLink
+                bg="#51538f"
+                textColor="white"
+                to="/signup"
+                text="Signup"
+              />
+            </>
+          )}
+        </div>
+      </Toolbar>
     </AppBar>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
